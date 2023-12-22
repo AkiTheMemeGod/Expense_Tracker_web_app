@@ -102,8 +102,7 @@ def report():
             st.info(f"{int(df.groupby(by=['Category']).sum()[['Amount']]['Amount'][1])}₹")
             st.info(f"{int(df.groupby(by=['Category']).sum()[['Amount']]['Amount'][0])}₹")
         except IndexError:
-            st.info("0₹")
-            st.info("0₹")
+            pass
 
 
 def expense_tracker():
