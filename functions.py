@@ -1,5 +1,6 @@
 import pandas as pd
 import csv2pdf as cp
+
 def get_types(filepath):
     """This function helps to read the todos you enter into a text file"""
     with open(filepath, 'r') as file:
@@ -57,7 +58,6 @@ def rd_csv(d: int, m, c, t, a: int, des: str):
     wrt_csv(date, month, cat, typ, amt, desc)
 
 
-def generate_pdf():
-    cp.convert("report.csv", "report.pdf",size=11, headersize=30, headerfont=r"RobotoMono-Bold.ttf", font=r"RobotoMono-BoldItalic.ttf")
 
-generate_pdf()
+
+
