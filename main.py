@@ -98,11 +98,9 @@ def report():
         st.subheader(f"Total Income so far : ")
         st.subheader(f"Total Expenses so far : ")
     with col5:
-        try:
-            st.info(f"{int(df.groupby(by=['Category']).sum()[['Amount']]['Amount'][1])}₹")
-            st.info(f"{int(df.groupby(by=['Category']).sum()[['Amount']]['Amount'][0])}₹")
-        except IndexError:
-            pass
+        st.info(f"{int(df.groupby(by=['Category']).sum()[['Amount']]['Amount'][1])}₹")
+        st.info(f"{int(df.groupby(by=['Category']).sum()[['Amount']]['Amount'][0])}₹")
+
 
 
 def expense_tracker():
