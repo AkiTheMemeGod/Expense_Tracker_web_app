@@ -1,0 +1,10 @@
+--Select a Type--
+Food
+Entertainment
+Miscellaneous
+Travel
+Fuel
+Personal
+Other
+Electronics
+Mobile Recharge
