@@ -169,6 +169,8 @@ def reset_fields():
     st.session_state["amt"] = None
     st.session_state["desc"] = None
 
+# st.image("dependencies/money.png",width=1770)
+
 
 option = option_menu(
     menu_title=None,
