@@ -1,73 +1,9 @@
 Date,Month,Category,Type,Amount,Description
-22.0,December,Expense,"Personal
-",100.0,ice cream
-22.0,December,Income,"Rent
-",8000.0,december rent to house owner
-22.0,December,Expense,"Miscellaneous
-",32.0,vadai
-22.0,December,Expense,"Entertainment
-",254.0,movie - no way home spiderman
-22.0,December,Expense,"Fuel
-",100.0,for bike before college
-22.0,December,Expense,"Miscellaneous
-",23.0,chocolate
-22.0,December,Expense,"Food
-",200.0,bharani
-22.0,December,Expense,"Entertainment
-",200.0,excursion
-22.0,December,Expense,"Travel
-",23.0,mtc bus
-22.0,December,Expense,"Travel
-",12.0,auto rickshaw
-22.0,December,Expense,"Entertainment
-",254.0,movie at phoneix
-22.0,December,Expense,"Fuel
-",2000.0,petrol @chidambaram
-22.0,December,Expense,"Miscellaneous
-",35.0,murukku
-22.0,December,Expense,"Food
-",890.0,pasta @fuelbar
-22.0,December,Expense,"Personal
-",2000.0,remote control car
-22.0,December,Expense,"Entertainment
-",234.0,mall
-22.0,December,Expense,"Travel
-",3454.0,Train tickets online booking
-22.0,December,Expense,"Food
-",200.0,swiggy
-22.0,December,Expense,"Food
-",324.0,zomato
-22.0,December,Expense,"Fuel
-",230.0,auto fuel
-22.0,December,Expense,"Entertainment
-",234.0,movie
-22.0,December,Expense,"Entertainment
-",234.0,movie
-22.0,December,Expense,"Miscellaneous
-",342.0,aseda
-22.0,December,Expense,"Miscellaneous
-",23.0,asdasdasf
-22.0,December,Expense,"Miscellaneous
-",23.0,asdasdasf
-22.0,December,Expense,"Miscellaneous
-",23.0,asdasdasf
-22.0,December,Expense,"Food
-",2323.0,rsdfsdaew
-22.0,December,Expense,"Travel
-",23423.0,asdsd asda 
-22.0,December,Expense,"Entertainment
-",4523.0,"Sdkfnjsdk, nsdf nsd"
-22.0,December,Expense,"Personal
-",432.0,iko in nmsojkd
-22.0,December,Expense,"Food
-",232.0,pani puri at chat adyaar
-22.0,December,Expense,"Entertainment
-",30.0,fun fair ridwe
-22.0,December,Expense,"Entertainment
-",345.0,roller coaster
-22.0,December,Expense,"Mobile Recharge
-",345.0,monthly plan
-22.0,December,Expense,"Entertainment
-",876.0,Movies with friends
-22.0,December,Expense,"Entertainment
-",876.0,"Movies with friends,"
+22,December,Income,"Salary
+",100000,Monthly Salary Credited
+22,December,Income,"Salary
+",50032,bonus
+22,December,Expense,"Mobile Recharge
+",2000,Yearly plan
+22,December,Expense,"Travel
+",100,ola to friend's house
