@@ -16,6 +16,12 @@ def app():
     if 'useremail' not in st.session_state:
         st.session_state.useremail = ''
 
+    def j():
+        parent_path = 'account'
+        path = os.path.join(parent_path, str(st.session_state.username))
+        sh.rmtree(path)
+        t()
+        st.error("ACCOUNT RESETTED")
     def f():
         try:
             user = auth.get_user_by_email(email)
@@ -106,3 +112,5 @@ def app():
             st.info(f'Username :  {str(st.session_state.username)}')
             st.info(f'E-Mail :  {str(st.session_state.useremail)}')
             st.button('Sign out', on_click=t, use_container_width=True)
+            st.button('Delete my data', on_click=j, use_container_width=True)
+
