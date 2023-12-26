@@ -1,4 +1,5 @@
 from functions import *
+import shutil as sh
 import firebase_admin
 # from firebase_admin import firestore
 from firebase_admin import credentials
@@ -79,6 +80,24 @@ def app():
             st.button('Login', on_click=f,use_container_width=True)
 
     if st.session_state.signout:
-        st.info(f'Name :  {str(st.session_state.username)}')
-        st.info(f'E-Mail :  {str(st.session_state.useremail)}')
-        st.button('Sign out', on_click=t, use_container_width=True)
+        st.markdown("""
+        <style>
+        .st-emotion-cache-1v0mbdj > img{
+            border-radius: 50%;
+
+            }
+        </style>
+        
+        """, unsafe_allow_html=True)
+        st.markdown("#")
+        st.markdown("#")
+
+        left_co, cent_co, last_co = st.columns(3)
+        with cent_co:
+            st.image("dependencies/Login.png",width=200)
+        st.markdown("#")
+
+        with st.container(border=True):
+            st.info(f'Username :  {str(st.session_state.username)}')
+            st.info(f'E-Mail :  {str(st.session_state.useremail)}')
+            st.button('Sign out', on_click=t, use_container_width=True)

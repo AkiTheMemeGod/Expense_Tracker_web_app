@@ -18,9 +18,11 @@ def app():
 
     col1, col2 = st.columns(2)
     with col1:
-        clicked = st.button("Add Expense", on_click=lambda: track(cat, types, amount, desc), key="expense",
+        clicked = st.button("Add Income", on_click=lambda: track(cat, types, amount, desc), key="expense",
                             use_container_width=True)
 
     with col2:
         st.button("Reset", on_click=reset_fields, use_container_width=True)
     if clicked: st.success("Recorded Successfully")
+
+
