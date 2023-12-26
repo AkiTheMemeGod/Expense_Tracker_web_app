@@ -76,7 +76,6 @@ def app():
 
             st.title("Total:")
             st.markdown("#")
-            st.markdown("#")
             try:
                 total_income = int(df.groupby(by=['Category']).sum()[['Amount']]['Amount'][1])
                 total_expense = int(df.groupby(by=['Category']).sum()[['Amount']]['Amount'][0])
