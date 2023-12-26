@@ -82,10 +82,7 @@ def app():
             total_income = int(df.groupby(by=['Category']).sum()[['Amount']]['Amount'][1])
             total_expense = int(df.groupby(by=['Category']).sum()[['Amount']]['Amount'][0])
             savings = total_income - total_expense
-            # if total_income > total_expense:
-            #    savs = f":red[{savings}]"
-            # if total_income < total_expense:
-            #    savs = f":red[{savings}]"
+
             col4, col5, col6 = st.columns(3)
             col4.metric(label="Total income", value=total_income)
             col5.metric(label="Total expenditure", value=total_expense)
@@ -101,8 +98,7 @@ def app():
         st.markdown("#")
         st.markdown("#")
         st.error("Login to see your report", icon="⚠️")
-
-    '''except:
+    except FileNotFoundError:
         st.markdown("#")
         st.markdown("#")
         st.markdown("#")
@@ -111,4 +107,4 @@ def app():
         st.markdown("#")
         st.markdown("#")
         st.markdown("#")
-        st.error("Login to see your report")'''
+        st.error("You dont have any expenses or income entries yet!", icon="⚠️")

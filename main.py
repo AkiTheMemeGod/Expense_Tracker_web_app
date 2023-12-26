@@ -26,7 +26,7 @@ class Multiapp:
                 menu_title=None,
                 options=["Account", "Expense", "Income", "Report"],
                 orientation="vertical",
-                icons=["user","cash-coin", "cash", "file-earmark-bar-graph-fill"],
+                icons=["person-fill", "cash-coin", "cash", "file-earmark-bar-graph-fill"],
                 default_index=0
             )
         if option == "Account":
@@ -40,6 +40,6 @@ class Multiapp:
 
         if option == "Report":
             Report.app()
-
+        st.session_state
 
     run()

@@ -88,3 +88,20 @@ def generate_pdf():
 
     os.remove(st.session_state.user_pdf)
     return PDFbyte
+
+
+def save_pfp(uploadedfile, dest):
+    path = os.path.join(dest, uploadedfile.name)
+    with open(path, "wb") as f:
+        f.write(uploadedfile.getbuffer())
+
+    rename_image(path,os.path.join(dest, "pfp.png"))
+
+def rename_image(old_name, new_name):
+    try:
+        os.rename(old_name, new_name)
+        print(f"File renamed from {old_name} to {new_name}")
+    except FileNotFoundError:
+        print(f"The file {old_name} does not exist.")
+    except FileExistsError:
+        print(f"The file {new_name} already exists.")

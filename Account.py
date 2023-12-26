@@ -1,7 +1,6 @@
 from functions import *
 import shutil as sh
 import firebase_admin
-# from firebase_admin import firestore
 from firebase_admin import credentials
 from firebase_admin import auth
 
@@ -27,7 +26,7 @@ def app():
             st.session_state.user_pdf = f"account/{str(st.session_state.username)}/report.pdf"
 
             global Usernm
-            Usernm = (user.uid)
+            Usernm = user.uid
 
             st.session_state.signedout = True
             st.session_state.signout = True
@@ -59,6 +58,10 @@ def app():
 
         if choice == 'Sign up':
             username = st.text_input("Enter  your unique username")
+            global datafile
+            datafile = st.file_uploader(label="Profile picture", type=['png','jpeg',])
+            if datafile is not None:
+                file_details = {"FileName": datafile.name, "FileType": datafile.type}
 
             if st.button('Create my account',use_container_width=True):
                 user = auth.create_user(email=email, password=password, uid=username)
@@ -72,6 +75,8 @@ def app():
                     print(path)
                     os.mkdir(path)
                     sh.copy("dependencies/report.csv", f"account/{str(user.uid)}")
+                    save_pfp(datafile, f"account/{str(user.uid)}")
+
                 except:
                     pass
                 st.success('Account created successfully!')
@@ -94,7 +99,7 @@ def app():
 
         left_co, cent_co, last_co = st.columns(3)
         with cent_co:
-            st.image("dependencies/Login.png",width=200)
+            st.image(f"account/{str(st.session_state.username)}/pfp.png", width=200,caption=st.session_state.username)
         st.markdown("#")
 
         with st.container(border=True):
