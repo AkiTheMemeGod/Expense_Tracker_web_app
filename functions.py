@@ -95,7 +95,7 @@ def save_pfp(uploadedfile, dest):
     with open(path, "wb") as f:
         f.write(uploadedfile.getbuffer())
 
-    rename_image(path,os.path.join(dest, "pfp.png"))
+    rename_image(path, os.path.join(dest, "pfp.png"))
 
 def rename_image(old_name, new_name):
     try:
