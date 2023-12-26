@@ -1,3 +1,5 @@
+import streamlit
+
 from functions import *
 
 
@@ -82,16 +84,16 @@ def app():
 
                 col4, col5, col6 = st.columns(3)
                 with col4:
-                    st.info(f"Total Income : {total_income}₹")
+                    st.success(f"Total Income : {total_income}₹")
                 with col5:
-                    st.info(f"Total Savings : {total_expense}₹")
+                    st.error(f"Total Expenses : {total_expense}₹")
                 with col6:
                     if savings < 0:
-                        st.error(f"Savings : {savings}₹")
+                        st.error(f"Total Savings : {savings}₹")
                     if savings == 0:
-                        st.warning(f"Savings : {savings}₹")
+                        st.warning(f"Total Savings : {savings}₹")
                     if savings > 0:
-                        st.success(f"Savings : {savings}₹")
+                        st.success(f"Total Savings : {savings}₹")
             except IndexError:
                 st.error("Enter at-least one entry in Income/Expenses")
     except AttributeError:
