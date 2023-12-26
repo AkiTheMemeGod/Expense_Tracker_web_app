@@ -6,7 +6,7 @@ def app():
     expense = get_types("dependencies/income_types.txt")
     cat = "Income"
 
-    types = st.selectbox(label="Select the type of expense:red[*]",
+    types = st.selectbox(label="Select the type of Income:red[*]",
                          options=expense, key="type2")
     if types == "Other\n":
         other = st.text_input(label="Enter the type of Income: ")
