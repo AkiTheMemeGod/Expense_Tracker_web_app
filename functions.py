@@ -1,5 +1,31 @@
 import pandas as pd
 from fpdf import FPDF
+import csv2pdf as cp
+import os
+import streamlit as st
+import time as t
+import shutil as sh
+
+
+# st.session_state.user_csv = f"account/{str(st.session_state.username)}/report.csv"
+# st.session_state.user_pdf = f"account/{str(st.session_state.username)}/report.pdf"
+
+
+def reset_fields():
+    st.session_state["type1"] = None
+    st.session_state["amt"] = None
+    st.session_state["desc"] = None
+
+
+def track(cat: str, typ: str, amt: str, desc: str):
+    if amt.startswith("0"):
+        amt = amt[1:]
+
+    if not all([cat, typ, amt, desc]):
+        st.warning("Please fill in all fields before adding an entry.")
+        return
+
+    rd_csv(d=int(t.strftime("%d")), m=t.strftime("%B"), c=cat, t=typ, a=int(amt), des=desc)
 
 
 def get_types(filepath):
@@ -15,15 +41,6 @@ def put_todos(tds, filepath):
         file.writelines(tds)
 
 
-def send_mail(msg):
-    import smtplib as sm
-    # = "This
-    s = sm.SMTP('smtp.gmail.com', 587)
-    s.starttls()
-    s.login('akis.pwdchecker@gmail.com', 'tjjqhaifdobuluhg')
-    s.sendmail('akis.pwdchecker@gmail.com', 'k.akashkumar@gmail.com', msg=msg)
-
-
 def wrt_csv(date: list, month: list, cat: list, typ: list, amt: list, desc: list):
 
     data = {
@@ -35,11 +52,11 @@ def wrt_csv(date: list, month: list, cat: list, typ: list, amt: list, desc: list
         "Description": desc
     }
     df = pd.DataFrame(data)
-    df.to_csv("report.csv",index=False,index_label=None)
+    df.to_csv(path_or_buf=st.session_state.user_csv, index=False,index_label=None)
 
 
 def rd_csv(d: int, m, c, t, a: int, des: str):
-    x = pd.read_csv("report.csv", sep=",")
+    x = pd.read_csv(filepath_or_buffer=st.session_state.user_csv, sep=",")
 
     date = list(x["Date"])
     month = list(x["Month"])
@@ -54,57 +71,20 @@ def rd_csv(d: int, m, c, t, a: int, des: str):
     typ.append(t)
     amt.append(a)
     desc.append(des)
-    x.reset_index(drop=True,inplace=True)
-    x.to_csv("report.csv",index=False,index_label=None)
+    x.reset_index(drop=True, inplace=True)
+    x.to_csv(st.session_state.user_csv, index=False,index_label=None)
     wrt_csv(date, month, cat, typ, amt, desc)
 
 
-def create_report():
-    df = pd.read_csv("report.csv", sep=",")
-    pdf = FPDF(orientation="P", unit="mm", format="A4")
-    pdf.set_auto_page_break(auto=False)
-    pdf.add_page()
+def generate_pdf():
+    cp.convert(source=st.session_state.user_csv, destination=st.session_state.user_pdf,
+               size=11,
+               headersize=30,
+               headerfont=r"dependencies/RobotoMono-Bold.ttf",
+               font=r"dependencies/RobotoMono-BoldItalic.ttf")
 
-    for index, row in df.iterrows():
-        pdf.set_font(family="Times", style="B", size=24)
-        pdf.set_text_color(100, 100, 100)
-        pdf.cell(w=0, h=12, text=row["Type"]) #, align="L")
+    with open(st.session_state.user_pdf, "rb") as pdf_file:
+        PDFbyte = pdf_file.read()
 
-    pdf.output("report.pdf")
-
-
-def wrt_acc(usrs: list, pwds: list, emails: list):
-
-    data = {
-        "Email": emails,
-        "Usernames": usrs,
-        "Passwords": pwds,
-    }
-    df = pd.DataFrame(data)
-    df.to_csv("dependencies/accounts.csv", index=False, index_label=None)
-
-
-def rd_acc(u: str, p: str, e: str):
-    x = pd.read_csv("dependencies/accounts.csv", sep=",")
-
-    email = list(x["Email"])
-    usrs = list(x["Usernames"])
-    pwds = list(x["Passwords"])
-
-    email.append(e)
-    usrs.append(u)
-    pwds.append(p)
-
-    x.reset_index(drop=True,inplace=True)
-    x.to_csv("dependencies/accounts.csv",index=False,index_label=None)
-    wrt_acc(usrs, pwds, email)
-
-
-def fetch_acc():
-    x = pd.read_csv("dependencies/accounts.csv", sep=",")
-
-    email = list(x["Email"])
-    usrs = list(x["Usernames"])
-    pwds = list(x["Passwords"])
-
-    return email, usrs, pwds
+    os.remove(st.session_state.user_pdf)
+    return PDFbyte
