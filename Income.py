@@ -2,6 +2,7 @@ from functions import *
 
 
 def app():
+
     st.title("Income Tracker")
     expense = get_types("dependencies/income_types.txt")
     cat = "Income"

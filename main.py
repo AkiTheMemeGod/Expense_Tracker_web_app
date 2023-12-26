@@ -1,6 +1,7 @@
 from functions import *
 from streamlit_option_menu import option_menu
 import Expenses, Income, Report, Account
+from streamlit_extras.app_logo import add_logo
 
 
 st.set_page_config(page_title="Spend It", layout="centered", page_icon="💵")
@@ -21,7 +22,19 @@ class Multiapp:
         # st.title("$pend It.")
 
         with st.sidebar:
-            add_logo("https://i.imgur.com/0LqV5Cv.png")
+            c1, c2, c3 = st.sidebar.columns(3)
+            with c3:
+                st.sidebar.title("💵 Spend-it.")
+            st.sidebar.markdown("""
+                    <style>
+                    .st-emotion-cache-1v0mbdj > img{
+                        border-radius: 50%;
+
+                        }
+                    </style>
+
+                    """, unsafe_allow_html=True)
+            st.sidebar.image("dependencies/logo.png")
             option = option_menu(
                 menu_title=None,
                 options=["Account", "Expense", "Income", "Report"],

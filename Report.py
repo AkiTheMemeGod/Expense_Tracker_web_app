@@ -1,15 +1,11 @@
 from functions import *
 
-# st.session_state.user_csv = f"account/{str(st.session_state.username)}/report.csv"
-# st.session_state.user_pdf = f"account/{str(st.session_state.username)}/report.pdf"
-
 
 def app():
     try:
 
         print(st.session_state.user_csv)
         df = pd.read_csv(filepath_or_buffer=st.session_state.user_csv, index_col=False)
-        # st.dataframe(df, use_container_width=True)
         st.sidebar.title("🛞 FILTERS")
 
         month = st.sidebar.multiselect(label="Select a Month",
@@ -44,8 +40,8 @@ def app():
                                              mime='application/octet-stream',
                                              on_click=generate_pdf,
                                              use_container_width=True)
-        if clicked: st.sidebar.success("Downloaded Successfully")
-
+        if clicked:
+            st.sidebar.success("Downloaded Successfully")
 
         with st.container(border=True):
             st.title("Your Expenditure Spree :")

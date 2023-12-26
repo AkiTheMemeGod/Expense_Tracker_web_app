@@ -1,6 +1,6 @@
 from functions import *
-# st.session_state.user_csv = f"account/{str(st.session_state.username)}/report.csv"
-# st.session_state.user_pdf = f"account/{str(st.session_state.username)}/report.pdf"
+
+
 def app():
     st.title("Expense Tracker")
     cat = "Expense"

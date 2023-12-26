@@ -1,14 +1,8 @@
 import pandas as pd
-from streamlit_extras.app_logo import add_logo
-from streamlit_extras.metric_cards import style_metric_cards
 import csv2pdf as cp
 import os
 import streamlit as st
-import time as t
-
-
-# st.session_state.user_csv = f"account/{str(st.session_state.username)}/report.csv"
-# st.session_state.user_pdf = f"account/{str(st.session_state.username)}/report.pdf"
+import time as tt
 
 
 def reset_fields():
@@ -25,7 +19,7 @@ def track(cat: str, typ: str, amt: str, desc: str):
         st.warning("Please fill in all fields before adding an entry.")
         return
 
-    rd_csv(d=int(t.strftime("%d")), m=t.strftime("%B"), c=cat, t=typ, a=int(amt), des=desc)
+    rd_csv(d=int(tt.strftime("%d")), m=tt.strftime("%B"), c=cat, t=typ, a=int(amt), des=desc)
 
 
 def get_types(filepath):
@@ -52,29 +46,32 @@ def wrt_csv(date: list, month: list, cat: list, typ: list, amt: list, desc: list
         "Description": desc
     }
     df = pd.DataFrame(data)
-    df.to_csv(path_or_buf=st.session_state.user_csv, index=False,index_label=None)
+    df.to_csv(path_or_buf=st.session_state.user_csv, index=False, index_label=None)
 
 
 def rd_csv(d: int, m, c, t, a: int, des: str):
-    x = pd.read_csv(filepath_or_buffer=st.session_state.user_csv, sep=",")
+    try:
+        x = pd.read_csv(filepath_or_buffer=st.session_state.user_csv, sep=",")
 
-    date = list(x["Date"])
-    month = list(x["Month"])
-    cat = list(x["Category"])
-    typ = list(x["Type"])
-    amt = list(x["Amount"])
-    desc = list(x["Description"])
+        date = list(x["Date"])
+        month = list(x["Month"])
+        cat = list(x["Category"])
+        typ = list(x["Type"])
+        amt = list(x["Amount"])
+        desc = list(x["Description"])
 
-    date.append(d)
-    month.append(m)
-    cat.append(c)
-    typ.append(t)
-    amt.append(a)
-    desc.append(des)
-    x.reset_index(drop=True, inplace=True)
-    x.to_csv(st.session_state.user_csv, index=False,index_label=None)
-    wrt_csv(date, month, cat, typ, amt, desc)
+        date.append(d)
+        month.append(m)
+        cat.append(c)
+        typ.append(t)
+        amt.append(a)
+        desc.append(des)
+        x.reset_index(drop=True, inplace=True)
+        x.to_csv(st.session_state.user_csv, index=False, index_label=None)
+        wrt_csv(date, month, cat, typ, amt, desc)
+    except AttributeError:
 
+        st.error("Login to save your inputs", icon="⚠️")
 
 def generate_pdf():
     cp.convert(source=st.session_state.user_csv, destination=st.session_state.user_pdf,
@@ -96,6 +93,7 @@ def save_pfp(uploadedfile, dest):
         f.write(uploadedfile.getbuffer())
 
     rename_image(path, os.path.join(dest, "pfp.png"))
+
 
 def rename_image(old_name, new_name):
     try:
