@@ -5,7 +5,7 @@ from firebase_admin import credentials
 from firebase_admin import auth
 
 cred = credentials.Certificate("dependencies/expense-tracker-769fe-56a85042b9fc.json")
-firebase_admin.initialize_app(cred)
+# firebase_admin.initialize_app(cred)
 
 
 def app():
