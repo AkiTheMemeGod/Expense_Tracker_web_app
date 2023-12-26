@@ -62,6 +62,10 @@ def app():
             if st.button('Create my account',use_container_width=True):
                 user = auth.create_user(email=email, password=password, uid=username)
                 try:
+                    try:
+                        os.mkdir("account")
+                    except:
+                        pass
                     parent_path = 'account'
                     path = os.path.join(parent_path, str(user.uid))
                     print(path)
