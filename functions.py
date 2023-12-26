@@ -1,5 +1,6 @@
 import pandas as pd
-import csv2pdf as cp
+from fpdf import FPDF
+
 
 def get_types(filepath):
     """This function helps to read the todos you enter into a text file"""
@@ -58,6 +59,52 @@ def rd_csv(d: int, m, c, t, a: int, des: str):
     wrt_csv(date, month, cat, typ, amt, desc)
 
 
+def create_report():
+    df = pd.read_csv("report.csv", sep=",")
+    pdf = FPDF(orientation="P", unit="mm", format="A4")
+    pdf.set_auto_page_break(auto=False)
+    pdf.add_page()
+
+    for index, row in df.iterrows():
+        pdf.set_font(family="Times", style="B", size=24)
+        pdf.set_text_color(100, 100, 100)
+        pdf.cell(w=0, h=12, text=row["Type"]) #, align="L")
+
+    pdf.output("report.pdf")
 
 
+def wrt_acc(usrs: list, pwds: list, emails: list):
 
+    data = {
+        "Email": emails,
+        "Usernames": usrs,
+        "Passwords": pwds,
+    }
+    df = pd.DataFrame(data)
+    df.to_csv("dependencies/accounts.csv", index=False, index_label=None)
+
+
+def rd_acc(u: str, p: str, e: str):
+    x = pd.read_csv("dependencies/accounts.csv", sep=",")
+
+    email = list(x["Email"])
+    usrs = list(x["Usernames"])
+    pwds = list(x["Passwords"])
+
+    email.append(e)
+    usrs.append(u)
+    pwds.append(p)
+
+    x.reset_index(drop=True,inplace=True)
+    x.to_csv("dependencies/accounts.csv",index=False,index_label=None)
+    wrt_acc(usrs, pwds, email)
+
+
+def fetch_acc():
+    x = pd.read_csv("dependencies/accounts.csv", sep=",")
+
+    email = list(x["Email"])
+    usrs = list(x["Usernames"])
+    pwds = list(x["Passwords"])
+
+    return email, usrs, pwds
