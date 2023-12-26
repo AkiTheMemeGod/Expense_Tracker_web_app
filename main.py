@@ -34,5 +34,4 @@ class Multiapp:
             Income.app()
         if option == "Report":
             Report.app()
-        st.session_state
     run()
