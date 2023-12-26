@@ -40,6 +40,5 @@ class Multiapp:
 
         if option == "Report":
             Report.app()
-        st.session_state
 
     run()

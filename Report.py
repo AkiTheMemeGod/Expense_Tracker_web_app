@@ -79,15 +79,24 @@ def app():
             st.title("Total:")
             st.markdown("#")
             st.markdown("#")
-            total_income = int(df.groupby(by=['Category']).sum()[['Amount']]['Amount'][1])
-            total_expense = int(df.groupby(by=['Category']).sum()[['Amount']]['Amount'][0])
-            savings = total_income - total_expense
-
+            try:
+                total_income = int(df.groupby(by=['Category']).sum()[['Amount']]['Amount'][1])
+                total_expense = int(df.groupby(by=['Category']).sum()[['Amount']]['Amount'][0])
+                savings = total_income - total_expense
+            except IndexError:
+                st.error("Enter at-least one entry in Income/Expenses")
             col4, col5, col6 = st.columns(3)
-            col4.metric(label="Total income", value=total_income)
-            col5.metric(label="Total expenditure", value=total_expense)
-            col6.metric(label="Total savings", value=savings)
-            style_metric_cards(border_left_color="#B054D0", background_color="#55176B", border_size_px=2, border_radius_px=8)
+            with col4:
+                st.info(f"Total Income : {total_income}₹")
+            with col5:
+                st.info(f"Total Savings : {total_expense}₹")
+            with col6:
+                if savings < 0:
+                    st.error(f"Savings : {savings}₹")
+                if savings == 0:
+                    st.warning(f"Savings : {savings}₹")
+                if savings > 0:
+                    st.success(f"Savings : {savings}₹")
     except AttributeError:
         st.markdown("#")
         st.markdown("#")
