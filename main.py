@@ -57,7 +57,7 @@ class Multiapp:
 
             st.sidebar.markdown("---")
 
-            side_title = '<h1 style="font-family:monospace; color:red; font-size: 50px;">₹ NAVIGATION</h1><br>'
+            side_title = '<h1 style="font-family:monospace; color:#E23D9F; font-size: 50px;">₹ NAVIGATION</h1><br>'
             st.sidebar.markdown(side_title, unsafe_allow_html=True)
             option = option_menu(
                 menu_title=None,
