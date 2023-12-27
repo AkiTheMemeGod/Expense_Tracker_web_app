@@ -12,10 +12,7 @@ alphabets = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h',
              '@', '<', '-', '=', '*', '.', '_', '#',
              '`', '~', ',', ':', ';', '[', ']', '{',
              '$', '!', '%', '&', '(', ')', '\n', '?',
-             '"', '>', '|', '+', "'", '^', '}', "\\","/"]
-
-'''print(len(alphabets))
-'''
+             '"', '>', '|', '+', "'", '^', '}', "\\", "/"]
 
 
 def key(bits):
@@ -24,7 +21,7 @@ def key(bits):
 
 
 def get_key():
-    with open("dependencies/key.txt", 'r') as file:
+    with open("key.txt", 'r') as file:
         keys = file.read()
     key_list = [keys[i:i + 64] for i in range(0, len(keys), 64)]
     # print(len(key_list))
@@ -32,14 +29,14 @@ def get_key():
 
 
 def put_key(the_key):
-    with open("dependencies/key.txt", 'w') as file:
+    with open("key.txt", 'w') as file:
         file.write(the_key)
 
 
 def new_key():
     i = 1
     dec_key = ""
-    while i <= 93:
+    while i <= 97:
         x = key(32)
         dec_key = dec_key + x
         i += 1
@@ -131,3 +128,4 @@ def encrypt_all(parent):
                 encrypt_file(f"{parent}/{i}/{x}")
 
 
+new_key()
