@@ -36,9 +36,9 @@ class Multiapp:
         })
 
     def run():
-        c1, c2, c3 = st.sidebar.columns([3, 1, 1])
+        c1, c2, c3 = st.sidebar.columns([4, 1, 1])
         with c1:
-            side_title = '<h1 style="font-family:monospace; color:red; font-size: 50px;">$pend It.</h1>'
+            side_title = '<h1 style="font-family:monospace; color:crimson; font-size: 45px;">$pend It.</h1>'
             st.markdown(side_title, unsafe_allow_html=True)
 
             try:
@@ -53,7 +53,7 @@ class Multiapp:
             st.markdown("###")
             try:
                 if st.session_state.pfp:
-                    st.markdown("""
+                    st.markdown("""<br>
                             <style>
                             .st-emotion-cache-1v0mbdj > img{
                                 border-radius: 50%;
@@ -65,17 +65,17 @@ class Multiapp:
                     st.image(st.session_state.pfp, width=50)
             except Exception:
                 pass
-        c1, c2, c3 = st.columns([0.31, 2.5, 0.1])
+        c1, c2, c3 = st.columns([0.20, 2.5, 0.1])
 
         with c2:
-            original_title = '<h1 style="font-family:monospace; color:lime; font-size: 100px;">$pend It.</h1>'
+            original_title = '<h1 style="font-family:monospace; color:lime; font-size: 100px;", align="center">$pend It.</h1>'
             st.markdown(original_title, unsafe_allow_html=True)
 
         with st.sidebar:
 
             st.sidebar.markdown("---")
 
-            side_title = '<h1 style="font-family:monospace; color:#E23D9F; font-size: 50px;">₹ NAVIGATION</h1><br>'
+            side_title = '<h1 style="font-family:monospace; color:#E23D9F; font-size: 35px;", align="center">🧭NAVIGATION</h1><br>'
             st.sidebar.markdown(side_title, unsafe_allow_html=True)
             option = option_menu(
                 menu_title=None,

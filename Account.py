@@ -5,19 +5,27 @@ from firebase_admin import credentials, auth
 from dependencies.encrypter import encrypt_file, decrypt_file
 
 cred = credentials.Certificate("dependencies/expense-tracker-769fe-56a85042b9fc.json")
-firebase_admin.initialize_app(cred)
+# firebase_admin.initialize_app(cred)
 
 # visibile on GitHub test
 
 def app():
+    def j():
+        parent_path = 'account'
+        path = os.path.join(parent_path, str(st.session_state.username))
+        sh.rmtree(path)
+        t()
+        st.error("ACCOUNT RESETTED")
+
     with st.sidebar:
         st.sidebar.markdown("---")
         global new_pfp
-        side_title = '<h1 style="font-family:monospace; color:#E23D9F; font-size: 35px;">🖼️ DISPLAY PICTURE</h1><br>'
+        side_title = '<h1 style="font-family:monospace; color:#E23D9F; font-size: 35px;", align="center">🖼️DISPLAY PICTURE</h1><br>'
         st.sidebar.markdown(side_title, unsafe_allow_html=True)
-        new_pfp = st.file_uploader("",type=['png', 'jpeg', ])
+        new_pfp = st.file_uploader("profile pic",type=['png', 'jpeg', ],label_visibility="hidden")
         if new_pfp is not None:
             whatfile = {"FileName": new_pfp.name, "FileType": new_pfp.type}
+        st.sidebar.markdown("###")
         pfp = st.button('Change Profile Picture', use_container_width=True)
         if pfp:
             if new_pfp is not None:
@@ -28,13 +36,13 @@ def app():
 
         st.sidebar.markdown("---")
 
-        side_title = '<h1 style="font-family:monospace; color:red; font-size: 35px;">🗑️ DELETE ALL MY DATA</h1><br>'
+        side_title = '<h1 style="font-family:monospace; color:red; font-size: 35px;", align="center">🗑️DELETE ALL MY DATA</h1><br>'
         st.sidebar.markdown(side_title, unsafe_allow_html=True)
         delete = st.sidebar.button('Delete my data', use_container_width=True, type="primary")
         if delete:
             st.sidebar.button("Are you sure ?", use_container_width=True, on_click=j, type="primary")
         st.sidebar.markdown("---")
-        side_title = '<h1 style="font-family:monospace; color:#E23D9F; font-size: 60px;"> ₹    AUTHOR</h1><br>'
+        side_title = '<h1 style="font-family:monospace; color:#E23D9F; font-size: 35px;" align="center">✒️AUTHOR</h1><br>'
         st.sidebar.markdown(side_title, unsafe_allow_html=True)
 
         st.sidebar.link_button("Made by Akash", url="https://akashportfolio.streamlit.app/", use_container_width=True)
@@ -50,12 +58,7 @@ def app():
     if 'useremail' not in st.session_state:
         st.session_state.useremail = ''
 
-    def j():
-        parent_path = 'account'
-        path = os.path.join(parent_path, str(st.session_state.username))
-        sh.rmtree(path)
-        t()
-        st.error("ACCOUNT RESETTED")
+
 
     def f():
 
@@ -104,7 +107,7 @@ def app():
         st.session_state.useremail = ""
         st.session_state.user_csv = ""
         st.session_state.user_pdf = ""
-
+        st.session_state.pfp = ""
         # logged_on_user_report = ""
         #  logged_on_user_pdf = ""
 
