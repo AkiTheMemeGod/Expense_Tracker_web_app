@@ -63,7 +63,7 @@ class Multiapp:
     
                             """, unsafe_allow_html=True)
                     st.image(st.session_state.pfp, width=50)
-            except AttributeError:
+            except Exception:
                 pass
         c1, c2, c3 = st.columns([0.31, 2.5, 0.1])
 
