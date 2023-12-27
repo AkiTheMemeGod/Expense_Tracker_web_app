@@ -73,6 +73,7 @@ def rd_csv(d: int, m, c, t, a: int, des: str):
 
         st.error("Login to save your inputs", icon="⚠️")
 
+
 def generate_pdf():
     cp.convert(source=st.session_state.user_csv, destination=st.session_state.user_pdf,
                size=11,

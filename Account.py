@@ -3,13 +3,13 @@ import shutil as sh
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import auth
-
+from streamlit_modal import Modal
 cred = credentials.Certificate("dependencies/expense-tracker-769fe-56a85042b9fc.json")
 # firebase_admin.initialize_app(cred)
 
 
 def app():
-    st.title("Your Account in $pend-it.")
+    st.title("Your :red[Account] in :green[$pend-it.]")
 
     if 'username' not in st.session_state:
         st.session_state.username = ''
@@ -22,6 +22,7 @@ def app():
         sh.rmtree(path)
         t()
         st.error("ACCOUNT RESETTED")
+
     def f():
         try:
             user = auth.get_user_by_email(email)
@@ -31,14 +32,26 @@ def app():
             st.session_state.user_csv = f"account/{str(st.session_state.username)}/report.csv"
             st.session_state.user_pdf = f"account/{str(st.session_state.username)}/report.pdf"
 
+            parent_path = 'account'
+            path = os.path.join(parent_path, str(user.uid))
+            print(path)
+            if os.path.exists(path):
+                # save_pfp(datafile, f"account/{str(user.uid)}")
+                pass
+            else:
+                os.mkdir(path)
+                # save_pfp(datafile, f"account/{str(user.uid)}")
+            sh.copy("dependencies/report.csv", f"account/{str(user.uid)}")
+            sh.copy("dependencies/pfp.png", f"account/{str(user.uid)}")
+
             global Usernm
             Usernm = user.uid
 
             st.session_state.signedout = True
             st.session_state.signout = True
 
-        except:
-            st.warning('Login Failed')
+        except Exception as e:
+            st.warning(e)
 
     def t():
         st.session_state.signout = False
@@ -50,7 +63,6 @@ def app():
 
         #logged_on_user_report = ""
         #  logged_on_user_pdf = ""
-        # st.rerun()
 
     if "signedout" not in st.session_state:
         st.session_state["signedout"] = False
@@ -79,16 +91,21 @@ def app():
                     parent_path = 'account'
                     path = os.path.join(parent_path, str(user.uid))
                     print(path)
-                    os.mkdir(path)
-                    sh.copy("dependencies/report.csv", f"account/{str(user.uid)}")
-                    save_pfp(datafile, f"account/{str(user.uid)}")
+                    if os.path.exists(path):
+                        sh.copy("dependencies/report.csv", f"account/{str(user.uid)}")
+                        save_pfp(datafile, f"account/{str(user.uid)}")
+
+                    else:
+                        os.mkdir(path)
+                        sh.copy("dependencies/report.csv", f"account/{str(user.uid)}")
+                        save_pfp(datafile, f"account/{str(user.uid)}")
 
                 except:
                     pass
                 st.success('Account created successfully!')
                 st.success('Please Login using your email and password')
         else:
-            st.button('Login', on_click=f,use_container_width=True)
+            st.button('Login', on_click=f, use_container_width=True)
 
     if st.session_state.signout:
         st.markdown("""
@@ -105,12 +122,13 @@ def app():
 
         left_co, cent_co, last_co = st.columns(3)
         with cent_co:
-            st.image(f"account/{str(st.session_state.username)}/pfp.png", width=200,caption=st.session_state.username)
+            st.image(f"account/{str(st.session_state.username)}/pfp.png", width=200, caption=st.session_state.username)
         st.markdown("#")
 
         with st.container(border=True):
+
             st.info(f'Username :  {str(st.session_state.username)}')
+
             st.info(f'E-Mail :  {str(st.session_state.useremail)}')
             st.button('Sign out', on_click=t, use_container_width=True)
-            st.button('Delete my data', on_click=j, use_container_width=True)
 
