@@ -18,7 +18,7 @@ def app():
         global new_pfp
         side_title = '<h1 style="font-family:monospace; color:#E23D9F; font-size: 35px;">🖼️ DISPLAY PICTURE</h1><br>'
         st.sidebar.markdown(side_title, unsafe_allow_html=True)
-        new_pfp = st.file_uploader("",type=['png', 'jpeg', ])
+        new_pfp = st.file_uploader("_",type=['png', 'jpeg', ])
         if new_pfp is not None:
             whatfile = {"FileName": new_pfp.name, "FileType": new_pfp.type}
         pfp = st.button('Change Profile Picture', use_container_width=True)
