@@ -1,15 +1,20 @@
 from functions import *
 import shutil as sh
 import firebase_admin
-from firebase_admin import credentials
-from firebase_admin import auth
+from firebase_admin import credentials, auth
+from dependencies.encrypter import encrypt_file, decrypt_file
 
 cred = credentials.Certificate("dependencies/expense-tracker-769fe-56a85042b9fc.json")
-# firebase_admin.initialize_app(cred)
-from passlib.hash import pbkdf2_sha256 as password_hash
+
+
+def start_app():
+    firebase_admin.initialize_app(cred)
+    open("dependencies/stat.txt", "w").write("Running")
 
 
 def app():
+    if not open("dependencies/stat.txt", "r").read() == "Running":
+        start_app()
     st.title("Your :red[Account] in :green[$pend-it.]")
 
     if 'username' not in st.session_state:
@@ -25,8 +30,17 @@ def app():
         st.error("ACCOUNT RESETTED")
 
     def f():
+
         try:
             user = auth.get_user_by_email(email=email)
+            decrypt_file("dependencies/passds.txt")
+            check_pass = []
+            check_pass = get_types("dependencies/passds.txt")
+            encrypt_file("dependencies/passds.txt")
+
+            if password+"\n" not in check_pass:
+                st.error("Wrong Password")
+                return
             st.session_state.username = user.uid
             st.session_state.useremail = user.email
             st.session_state.user_csv = f"account/{str(st.session_state.username)}/report.csv"
@@ -51,7 +65,7 @@ def app():
             st.session_state.signout = True
 
         except Exception as e:
-            st.write(e)
+            st.error("Enter a Valid Email")
 
     def t():
         st.session_state.signout = False
@@ -82,28 +96,38 @@ def app():
                 file_details = {"FileName": datafile.name, "FileType": datafile.type}
 
             if st.button('Create my account', use_container_width=True):
-                user = auth.create_user(email=email, password=password, uid=username)
                 try:
+                    user = auth.create_user(email=email, password=password, uid=username)
+                    decrypt_file("dependencies/passds.txt")
+                    passds = []
+                    passds = get_types("dependencies/passds.txt")
+                    password += "\n"
+                    passds.append(password)
+                    put_todos(passds, "dependencies/passds.txt")
+                    encrypt_file("dependencies/passds.txt")
                     try:
-                        os.mkdir("account")
+                        try:
+                            os.mkdir("account")
+                        except:
+                            pass
+                        parent_path = 'account'
+                        path = os.path.join(parent_path, str(user.uid))
+                        print(path)
+                        if os.path.exists(path):
+                            sh.copy("dependencies/report.csv", f"account/{str(user.uid)}")
+                            save_pfp(datafile, f"account/{str(user.uid)}")
+
+                        else:
+                            os.mkdir(path)
+                            sh.copy("dependencies/report.csv", f"account/{str(user.uid)}")
+                            save_pfp(datafile, f"account/{str(user.uid)}")
+                        st.success('Account created successfully!')
+                        st.success('Please Login using your email and password')
                     except:
                         pass
-                    parent_path = 'account'
-                    path = os.path.join(parent_path, str(user.uid))
-                    print(path)
-                    if os.path.exists(path):
-                        sh.copy("dependencies/report.csv", f"account/{str(user.uid)}")
-                        save_pfp(datafile, f"account/{str(user.uid)}")
+                except auth.UidAlreadyExistsError:
+                    st.error("User Already Exists")
 
-                    else:
-                        os.mkdir(path)
-                        sh.copy("dependencies/report.csv", f"account/{str(user.uid)}")
-                        save_pfp(datafile, f"account/{str(user.uid)}")
-
-                except:
-                    pass
-                st.success('Account created successfully!')
-                st.success('Please Login using your email and password')
         else:
             st.button('Login', on_click=f, use_container_width=True)
 
