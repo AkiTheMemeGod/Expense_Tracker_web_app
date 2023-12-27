@@ -46,8 +46,8 @@ def app():
         st.sidebar.link_button("Application testing", url="https://www.linkedin.com/in/rohith-fernando-86225b244/",
                                use_container_width=True)
 
-    if not open("dependencies/stat.txt", "r").read() == "Running":
-        start_app()
+    #if not open("dependencies/stat.txt", "r").read() == "Running":
+    #    start_app()
     st.title("Your :red[Account] in :green[$pend-it.]")
 
     if 'username' not in st.session_state:
