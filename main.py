@@ -1,3 +1,4 @@
+import streamlit
 from functions import *
 from streamlit_option_menu import option_menu
 import Expenses, Income, Report, Account
@@ -14,6 +15,7 @@ def j():
     t()
     st.error("ACCOUNT RESETTED")
 
+
 def t():
     st.session_state.signout = False
     st.session_state.signedout = False
@@ -21,6 +23,7 @@ def t():
     st.session_state.useremail = ""
     st.session_state.user_csv = ""
     st.session_state.user_pdf = ""
+
 
 class Multiapp:
     def __init__(self):
@@ -33,27 +36,19 @@ class Multiapp:
         })
 
     def run():
-        c1, c2, c3 = st.sidebar.columns([0.63, 2.5, 0.1])
-        with c2:
+        c1, c2, c3 = st.sidebar.columns([2.9 ,0.05, 0.05])
+        with c1:
             side_title = '<h1 style="font-family:monospace; color:red; font-size: 50px;">$pend It.</h1>'
             st.markdown(side_title, unsafe_allow_html=True)
+            if st.session_state.username:
+                side_title = (f'<h3 style="font-family:monospace; color:white; font-size: 25px;">Welcome back : '
+                              f'{st.session_state.username}</h3> <img src="{st.session_state.pfp}" width="500">')
+                st.markdown(side_title, unsafe_allow_html=True)
         c1, c2, c3 = st.columns([0.31, 2.5,0.1])
         with c2:
             original_title = '<h1 style="font-family:monospace; color:lime; font-size: 100px;">$pend It.</h1>'
             st.markdown(original_title, unsafe_allow_html=True)
         with st.sidebar:
-
-            st.sidebar.markdown("""
-                    <style>
-                    .st-emotion-cache-1v0mbdj > img{
-                        border-radius: 50%;
-
-                        }
-                    </style>
-
-                    """, unsafe_allow_html=True)
-            st.sidebar.image("dependencies/logo.png")
-            st.sidebar.markdown("###")
 
             st.sidebar.markdown("---")
 
@@ -93,6 +88,7 @@ class Multiapp:
             st.sidebar.link_button("Made by Akash",url="https://akashportfolio.streamlit.app/", use_container_width=True)
             st.sidebar.link_button("Contact Me", url="https://akashportfolio.streamlit.app/Contact_Me",
                                    use_container_width=True)
+            st.sidebar.link_button("Application testing", url="https://www.linkedin.com/in/rohith-fernando-86225b244/",use_container_width=True)
         if option == "Account":
             Account.app()
         if option == "Expense":
@@ -104,4 +100,5 @@ class Multiapp:
 
         if option == "Report":
             Report.app()
+        # st.session_state
     run()
