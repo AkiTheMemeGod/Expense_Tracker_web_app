@@ -21,7 +21,7 @@ def key(bits):
 
 
 def get_key():
-    with open("key.txt", 'r') as file:
+    with open("dependencies/key.txt", 'r') as file:
         keys = file.read()
     key_list = [keys[i:i + 64] for i in range(0, len(keys), 64)]
     # print(len(key_list))
@@ -29,7 +29,7 @@ def get_key():
 
 
 def put_key(the_key):
-    with open("key.txt", 'w') as file:
+    with open("dependencies/key.txt", 'w') as file:
         file.write(the_key)
 
 
