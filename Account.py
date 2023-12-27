@@ -3,8 +3,10 @@ import shutil as sh
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import auth
+
 cred = credentials.Certificate("dependencies/expense-tracker-769fe-56a85042b9fc.json")
 # firebase_admin.initialize_app(cred)
+from passlib.hash import pbkdf2_sha256 as password_hash
 
 
 def app():
@@ -24,13 +26,12 @@ def app():
 
     def f():
         try:
-            user = auth.get_user_by_email(email)
-            print(user.uid)
+            user = auth.get_user_by_email(email=email)
             st.session_state.username = user.uid
             st.session_state.useremail = user.email
             st.session_state.user_csv = f"account/{str(st.session_state.username)}/report.csv"
             st.session_state.user_pdf = f"account/{str(st.session_state.username)}/report.pdf"
-            # st.session_state.pfp = f"account/{str(st.session_state.username)}/pfp.png"
+            st.session_state.pfp = f"account/{str(st.session_state.username)}/pfp.png"
             parent_path = 'account'
             path = os.path.join(parent_path, str(user.uid))
             print(path)
@@ -50,7 +51,7 @@ def app():
             st.session_state.signout = True
 
         except Exception as e:
-            st.warning(e)
+            st.write(e)
 
     def t():
         st.session_state.signout = False
@@ -60,7 +61,7 @@ def app():
         st.session_state.user_csv = ""
         st.session_state.user_pdf = ""
 
-        #logged_on_user_report = ""
+        # logged_on_user_report = ""
         #  logged_on_user_pdf = ""
 
     if "signedout" not in st.session_state:
@@ -76,11 +77,11 @@ def app():
         if choice == 'Sign up':
             username = st.text_input("Enter  your unique username")
             global datafile
-            datafile = st.file_uploader(label="Profile picture", type=['png','jpeg',])
+            datafile = st.file_uploader(label="Profile picture", type=['png', 'jpeg', ])
             if datafile is not None:
                 file_details = {"FileName": datafile.name, "FileType": datafile.type}
 
-            if st.button('Create my account',use_container_width=True):
+            if st.button('Create my account', use_container_width=True):
                 user = auth.create_user(email=email, password=password, uid=username)
                 try:
                     try:
@@ -114,7 +115,7 @@ def app():
 
             }
         </style>
-        
+
         """, unsafe_allow_html=True)
         st.markdown("#")
         st.markdown("#")
@@ -125,8 +126,8 @@ def app():
         st.markdown("#")
 
         with st.container(border=True):
-
             st.info(f'Username :  {str(st.session_state.username)}')
+
             st.info(f'E-Mail :  {str(st.session_state.useremail)}')
             st.button('Sign out', on_click=t, use_container_width=True)
 

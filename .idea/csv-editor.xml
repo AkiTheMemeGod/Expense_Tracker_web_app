@@ -10,6 +10,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\account\Youdie\report.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\dependencies\report.csv">
           <value>
             <Attribute>
