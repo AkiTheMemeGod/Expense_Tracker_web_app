@@ -84,34 +84,7 @@ class Multiapp:
                 icons=["person-fill", "cash-coin", "cash", "file-earmark-bar-graph-fill"],
                 default_index=0
             )
-            st.sidebar.markdown("---")
-            global new_pfp
-            new_pfp = st.file_uploader(label="Change Profile picture", type=['png', 'jpeg', ])
-            if new_pfp is not None:
-                whatfile = {"FileName": new_pfp.name, "FileType": new_pfp.type}
-            pfp = st.button('Change Profile Picture', use_container_width=True)
-            if pfp:
-                if new_pfp is not None:
-                    os.remove(f"account/{str(st.session_state.username)}/pfp.png")
-                    save_pfp(new_pfp, f"account/{str(st.session_state.username)}")
-                else:
-                    st.sidebar.error("Upload a file to change profile pic")
 
-            st.sidebar.markdown("---")
-
-            side_title = '<h1 style="font-family:monospace; color:red; font-size: 35px;">DELETE ALL MY DATA</h1><br>'
-            st.sidebar.markdown(side_title, unsafe_allow_html=True)
-            delete = st.sidebar.button('Delete my data', use_container_width=True,type="primary")
-            if delete:
-                st.sidebar.button("Are you sure ?", use_container_width=True, on_click=j,type="primary")
-            st.sidebar.markdown("---")
-            side_title = '<h1 style="font-family:monospace; color:#E23D9F; font-size: 60px;"> ₹    AUTHOR</h1><br>'
-            st.sidebar.markdown(side_title, unsafe_allow_html=True)
-
-            st.sidebar.link_button("Made by Akash",url="https://akashportfolio.streamlit.app/", use_container_width=True)
-            st.sidebar.link_button("Contact Me", url="https://akashportfolio.streamlit.app/Contact_Me",
-                                   use_container_width=True)
-            st.sidebar.link_button("Application testing", url="https://www.linkedin.com/in/rohith-fernando-86225b244/",use_container_width=True)
         if option == "Account":
             Account.app()
         if option == "Expense":

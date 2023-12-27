@@ -13,6 +13,39 @@ def start_app():
 
 
 def app():
+    with st.sidebar:
+        st.sidebar.markdown("---")
+        global new_pfp
+        side_title = '<h1 style="font-family:monospace; color:#E23D9F; font-size: 35px;">🖼️ DISPLAY PICTURE</h1><br>'
+        st.sidebar.markdown(side_title, unsafe_allow_html=True)
+        new_pfp = st.file_uploader("",type=['png', 'jpeg', ])
+        if new_pfp is not None:
+            whatfile = {"FileName": new_pfp.name, "FileType": new_pfp.type}
+        pfp = st.button('Change Profile Picture', use_container_width=True)
+        if pfp:
+            if new_pfp is not None:
+                os.remove(f"account/{str(st.session_state.username)}/pfp.png")
+                save_pfp(new_pfp, f"account/{str(st.session_state.username)}")
+            else:
+                st.sidebar.error("Upload a file to change profile pic")
+
+        st.sidebar.markdown("---")
+
+        side_title = '<h1 style="font-family:monospace; color:red; font-size: 35px;">🗑️ DELETE ALL MY DATA</h1><br>'
+        st.sidebar.markdown(side_title, unsafe_allow_html=True)
+        delete = st.sidebar.button('Delete my data', use_container_width=True, type="primary")
+        if delete:
+            st.sidebar.button("Are you sure ?", use_container_width=True, on_click=j, type="primary")
+        st.sidebar.markdown("---")
+        side_title = '<h1 style="font-family:monospace; color:#E23D9F; font-size: 60px;"> ₹    AUTHOR</h1><br>'
+        st.sidebar.markdown(side_title, unsafe_allow_html=True)
+
+        st.sidebar.link_button("Made by Akash", url="https://akashportfolio.streamlit.app/", use_container_width=True)
+        st.sidebar.link_button("Contact Me", url="https://akashportfolio.streamlit.app/Contact_Me",
+                               use_container_width=True)
+        st.sidebar.link_button("Application testing", url="https://www.linkedin.com/in/rohith-fernando-86225b244/",
+                               use_container_width=True)
+
     if not open("dependencies/stat.txt", "r").read() == "Running":
         start_app()
     st.title("Your :red[Account] in :green[$pend-it.]")
