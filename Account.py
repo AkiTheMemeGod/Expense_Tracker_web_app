@@ -5,11 +5,7 @@ from firebase_admin import credentials, auth
 from dependencies.encrypter import encrypt_file, decrypt_file
 
 cred = credentials.Certificate("dependencies/expense-tracker-769fe-56a85042b9fc.json")
-
-
-def start_app():
-    firebase_admin.initialize_app(cred)
-    open("dependencies/stat.txt", "w").write("Running")
+firebase_admin.initialize_app(cred)
 
 
 def app():
@@ -46,8 +42,6 @@ def app():
         st.sidebar.link_button("Application testing", url="https://www.linkedin.com/in/rohith-fernando-86225b244/",
                                use_container_width=True)
 
-    if not open("dependencies/stat.txt", "r").read() == "Running":
-        start_app()
     st.title("Your :red[Account] in :green[$pend-it.]")
 
     if 'username' not in st.session_state:
