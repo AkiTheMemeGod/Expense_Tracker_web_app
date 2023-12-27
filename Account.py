@@ -30,7 +30,7 @@ def app():
             st.session_state.useremail = user.email
             st.session_state.user_csv = f"account/{str(st.session_state.username)}/report.csv"
             st.session_state.user_pdf = f"account/{str(st.session_state.username)}/report.pdf"
-            st.session_state.pfp = f"account/{str(st.session_state.username)}/pfp.png"
+            # st.session_state.pfp = f"account/{str(st.session_state.username)}/pfp.png"
             parent_path = 'account'
             path = os.path.join(parent_path, str(user.uid))
             print(path)
