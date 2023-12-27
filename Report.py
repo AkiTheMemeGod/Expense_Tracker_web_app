@@ -8,7 +8,7 @@ def app():
         df = pd.read_csv(filepath_or_buffer=st.session_state.user_csv, index_col=False)
         with st.sidebar:
             st.sidebar.markdown("---")
-            side_title = '<h1 style="font-family:monospace; color:red; font-size: 50px;">₹ FILTERS</h1><br>'
+            side_title = '<h1 style="font-family:monospace; color:red; font-size: 35px;">🎯 FILTERS</h1><br>'
             st.sidebar.markdown(side_title, unsafe_allow_html=True)
             # st.sidebar.title("₹ :rainbow[FILTERS]")
 
