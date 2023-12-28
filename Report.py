@@ -31,16 +31,19 @@ def app():
             color = '#da7070'
             df_selection = df.query(
                 "Month == @month & Category == @category & Type == @exp_type")
-            PDFbyte = generate_pdf()
+
+            PDFbyte = generate_pdf(df_selection)
             st.sidebar.markdown("---")
+
             clicked = st.sidebar.download_button(label=":rainbow[Download Report]",
                                                  data=PDFbyte,
                                                  file_name=st.session_state.user_pdf,
                                                  mime='application/octet-stream',
-                                                 on_click=generate_pdf,
+                                                 on_click=lambda: generate_pdf(df_selection),
                                                  use_container_width=True)
             if clicked:
                 st.sidebar.success("Downloaded Successfully")
+
 
         with st.container(border=True):
             st.title(":rainbow[Report]")
@@ -117,4 +120,4 @@ def app():
         st.markdown("#")
         st.markdown("#")
         st.markdown("#")
-        st.error("You dont have any expenses or income entries yet!", icon="⚠️")
+        st.error("You dont have any expense or income entries yet!", icon="⚠️")

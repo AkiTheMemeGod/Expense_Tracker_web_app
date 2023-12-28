@@ -74,8 +74,8 @@ def rd_csv(d: int, m, c, t, a: int, des: str):
         st.error("Login to save your inputs", icon="⚠️")
 
 
-def generate_pdf():
-    df = pd.read_csv(filepath_or_buffer=st.session_state.user_csv, sep=",", index_col=None)
+def generate_pdf(df):
+    # df = pd.read_csv(filepath_or_buffer=st.session_state.user_csv, sep=",", index_col=None)
 
     pdf = FPDF(orientation="P", unit="mm", format="A4")
     pdf.add_page()
@@ -96,7 +96,7 @@ def generate_pdf():
 
     pdf.set_text_color(0, 0, 0)
     pdf.set_font(family="Times", size=18, style="B")
-    pdf.text(txt="AkiTheMemeGod", x=156, y=25)
+    pdf.text(txt=st.session_state.username, x=156, y=25)
 
     pdf.set_text_color(0, 0, 0)
     pdf.set_font(family="Times", size=18, style="B")
@@ -106,6 +106,7 @@ def generate_pdf():
     pdf.set_font(family="times", size=25, style="B")
     pdf.set_text_color(50, 50, 50)
     pdf.cell(w=20, h=10, txt='Date', align="C")
+
     pdf.cell(w=50, h=10, txt='Month', align="C")
     pdf.cell(w=40, h=10, txt='Category', align="C")
     pdf.cell(w=55, h=10, txt='Type', align="C")
@@ -117,45 +118,49 @@ def generate_pdf():
     pdf.cell(w=32, h=3, txt='', ln=1, align="C")
 
     for index, row in df.iterrows():
-        pdf.set_font(family="Times", size=25)
-        pdf.set_text_color(50, 50, 50)
-        pdf.cell(w=20, h=10, txt=str(row['Date']), border=1, align="C")
+        try:
+            pdf.set_font(family="Times", size=25)
+            pdf.set_text_color(50, 50, 50)
+            pdf.cell(w=20, h=10, txt=str(row['Date']), border=1, align="C")
+            pdf.cell(w=50, h=10, txt=str(row['Month']), border=1, align="C")
+            pdf.cell(w=40, h=10, txt=str(row['Category']), border=1, align="C")
+            pdf.cell(w=55, h=10, txt=str(row['Type']), border=1, align="C")
+            pdf.cell(w=32, h=10, txt=str(row['Amount']), border=1, ln=1, align="C")
+        except KeyError:
+            pass
+    try:
+        total_income = str(df.groupby(by=['Category']).sum()[['Amount']]['Amount'][1])
+        total_expense = str(df.groupby(by=['Category']).sum()[['Amount']]['Amount'][0])
 
-        pdf.cell(w=50, h=10, txt=str(row['Month']), border=1, align="C")
-        pdf.cell(w=40, h=10, txt=str(row['Category']), border=1, align="C")
-        pdf.cell(w=55, h=10, txt=str(row['Type']), border=1, align="C")
-        pdf.cell(w=32, h=10, txt=str(row['Amount']), border=1, ln=1, align="C")
 
-    total_income = str(df.groupby(by=['Category']).sum()[['Amount']]['Amount'][1])
-    total_expense = str(df.groupby(by=['Category']).sum()[['Amount']]['Amount'][0])
+        pdf.set_font(family="Times", size=25, style="B")
+        pdf.cell(w=20, h=3, txt='', align="C")
+        pdf.cell(w=50, h=3, txt='', align="C")
+        pdf.cell(w=40, h=3, txt='', align="C")
+        pdf.cell(w=55, h=3, txt='', align="C")
+        pdf.cell(w=32, h=3, txt='', ln=1, align="C")
+        pdf.set_text_color(33, 179, 42)
+        pdf.cell(w=20, h=10, txt='', align="C")
+        pdf.cell(w=50, h=10, txt='', align="C")
+        pdf.cell(w=40, h=10, txt='Total', align="R")
+        pdf.cell(w=55, h=10, txt='Income : ', align="L")
+        pdf.cell(w=32, h=10, txt=total_income, ln=1, align="L")
+        pdf.set_font(family="Times", size=25, style="B")
 
-    pdf.set_font(family="Times", size=25, style="B")
-    pdf.cell(w=20, h=3, txt='', align="C")
-    pdf.cell(w=50, h=3, txt='', align="C")
-    pdf.cell(w=40, h=3, txt='', align="C")
-    pdf.cell(w=55, h=3, txt='', align="C")
-    pdf.cell(w=32, h=3, txt='', ln=1, align="C")
-    pdf.set_text_color(33, 179, 42)
-    pdf.cell(w=20, h=10, txt='', align="C")
-    pdf.cell(w=50, h=10, txt='', align="C")
-    pdf.cell(w=40, h=10, txt='Total', align="R")
-    pdf.cell(w=55, h=10, txt='Income : ', align="L")
-    pdf.cell(w=32, h=10, txt=total_income, ln=1, align="L")
-    pdf.set_font(family="Times", size=25, style="B")
-
-    pdf.cell(w=20, h=3, txt='', align="C")
-    pdf.cell(w=50, h=3, txt='', align="C")
-    pdf.cell(w=40, h=3, txt='', align="C")
-    pdf.cell(w=55, h=3, txt='', align="C")
-    pdf.cell(w=32, h=3, txt='', ln=1, align="C")
-    pdf.set_text_color(255, 0, 0)
-    pdf.cell(w=20, h=10, txt='', align="C")
-    pdf.cell(w=50, h=10, txt='', align="C")
-    pdf.cell(w=40, h=10, txt='Total', align="R")
-    pdf.cell(w=55, h=10, txt='Expense : ', align="L")
-    pdf.cell(w=32, h=10, txt=total_expense, ln=1, align="L")
-
-    pdf.output("report.pdf")
+        pdf.cell(w=20, h=3, txt='', align="C")
+        pdf.cell(w=50, h=3, txt='', align="C")
+        pdf.cell(w=40, h=3, txt='', align="C")
+        pdf.cell(w=55, h=3, txt='', align="C")
+        pdf.cell(w=32, h=3, txt='', ln=1, align="C")
+        pdf.set_text_color(255, 0, 0)
+        pdf.cell(w=20, h=10, txt='', align="C")
+        pdf.cell(w=50, h=10, txt='', align="C")
+        pdf.cell(w=40, h=10, txt='Total', align="R")
+        pdf.cell(w=55, h=10, txt='Expense : ', align="L")
+        pdf.cell(w=32, h=10, txt=total_expense, ln=1, align="L")
+    except Exception:
+        pass
+    pdf.output(st.session_state.user_pdf)
 
     with open(st.session_state.user_pdf, "rb") as pdf_file:
         PDFbyte = pdf_file.read()
