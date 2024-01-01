@@ -4,7 +4,7 @@ from streamlit_option_menu import option_menu
 import Expenses, Income, Report, Account
 from streamlit_extras.app_logo import add_logo
 import shutil as sh
-
+# s
 st.set_page_config(page_title="Spend It", layout="centered", page_icon="💵")
 
 
