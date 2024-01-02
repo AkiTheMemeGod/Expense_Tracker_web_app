@@ -50,9 +50,6 @@ class Multiapp:
             except AttributeError:
                 pass
         with c2:
-            st.markdown("###")
-            st.markdown("###")
-            st.markdown("###")
             try:
                 if st.session_state.pfp:
                     st.markdown("""<br>
