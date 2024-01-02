@@ -77,13 +77,15 @@ def decrypt(message):
 
 
 def decrypt_file(filename):
-    with open(filename, 'r') as enc_passes:
-        passes = enc_passes.read()
-    dec_pass = decrypt(passes)
+    try:
+        with open(filename, 'r') as enc_passes:
+            passes = enc_passes.read()
+        dec_pass = decrypt(passes)
 
-    with open(filename, 'w') as passes:
-        passes.write(dec_pass)
-
+        with open(filename, 'w') as passes:
+            passes.write(dec_pass)
+    except FileNotFoundError:
+        open("dependencies/passds.txt", "w+")
 
 def encrypt_file(filename):
     with open(filename, 'r') as passes:

@@ -24,10 +24,12 @@ def track(cat: str, typ: str, amt: str, desc: str):
 
 def get_types(filepath):
     """This function helps to read the todos you enter into a text file"""
-    with open(filepath, 'r') as file:
-        todos = file.readlines()
-    return todos
-
+    try:
+        with open(filepath, 'r') as file:
+            todos = file.readlines()
+        return todos
+    except FileNotFoundError:
+        open("dependencies/passds.txt", "w+")
 
 def put_todos(tds, filepath):
     """This function helps to put the todos you enter into a text file"""

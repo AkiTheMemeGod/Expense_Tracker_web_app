@@ -130,15 +130,20 @@ def app():
                 file_details = {"FileName": datafile.name, "FileType": datafile.type}
 
             if st.button('Create my account', use_container_width=True):
+
                 try:
                     user = auth.create_user(email=email, password=password, uid=username)
+
                     decrypt_file("dependencies/passds.txt")
                     passds = []
+
                     passds = get_types("dependencies/passds.txt")
+
                     password += "\n"
                     passds.append(password)
                     put_todos(passds, "dependencies/passds.txt")
                     encrypt_file("dependencies/passds.txt")
+
                     try:
                         try:
                             os.mkdir("account")
@@ -147,14 +152,18 @@ def app():
                         parent_path = 'account'
                         path = os.path.join(parent_path, str(user.uid))
                         print(path)
-                        if os.path.exists(path):
-                            sh.copy("dependencies/report.csv", f"account/{str(user.uid)}")
-                            save_pfp(datafile, f"account/{str(user.uid)}")
+                        try:
+                            if os.path.exists(path):
+                                sh.copy("dependencies/report.csv", f"account/{str(user.uid)}")
+                                save_pfp(datafile, f"account/{str(user.uid)}")
 
-                        else:
-                            os.mkdir(path)
-                            sh.copy("dependencies/report.csv", f"account/{str(user.uid)}")
-                            save_pfp(datafile, f"account/{str(user.uid)}")
+                            else:
+                                os.mkdir(path)
+                                sh.copy("dependencies/report.csv", f"account/{str(user.uid)}")
+                                save_pfp(datafile, f"account/{str(user.uid)}")
+                        except Exception:
+                            if not datafile:
+                                sh.copy("dependencies/pfp.png", f"account/{username}")
                         st.success('Account created successfully!')
                         st.success('Please Login using your email and password')
                     except:
