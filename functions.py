@@ -4,12 +4,7 @@ import os
 import streamlit as st
 import time as tt
 
-hide_github_icon = """
-#GithubIcon {
-  visibility: hidden;
-}
-"""
-st.markdown(hide_github_icon, unsafe_allow_html=True)
+
 
 def reset_fields():
     st.session_state["type1"] = None

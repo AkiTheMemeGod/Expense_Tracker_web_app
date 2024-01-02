@@ -7,6 +7,12 @@ import shutil as sh
 # s
 st.set_page_config(page_title="Spend It", layout="centered", page_icon="💵")
 
+hide_github_icon = """
+#GithubIcon {
+  visibility: hidden;
+}
+"""
+st.markdown(hide_github_icon, unsafe_allow_html=True)
 
 def j():
     parent_path = 'account'
