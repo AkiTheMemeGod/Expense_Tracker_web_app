@@ -52,7 +52,7 @@ class Multiapp:
         with c2:
             try:
                 if st.session_state.pfp:
-                    st.markdown("""<br>
+                    st.markdown("""
                             <style>
                             .st-emotion-cache-1v0mbdj > img{
                                 border-radius: 50%;
