@@ -36,11 +36,13 @@ class Multiapp:
         })
 
     def run():
-        c1, c2, c3 = st.sidebar.columns([4, 1, 1])
-        with c1:
-            side_title = '<h1 style="font-family:monospace; color:crimson; font-size: 45px;">$pend It.</h1>'
-            st.markdown(side_title, unsafe_allow_html=True)
 
+        side_title = '<h1 style="font-family:monospace; color:crimson; font-size: 45px;", align="center">$pend It.</h1>'
+        st.sidebar.markdown(side_title, unsafe_allow_html=True)
+
+        c1, c2, c3 = st.sidebar.columns([4, 1, 1])
+
+        with c1:
             try:
                 if st.session_state.username:
                     side_title = f'<h3 style="font-family:monospace; color:white; font-size: 25px;">Welcome back : {st.session_state.username}</h3>'
