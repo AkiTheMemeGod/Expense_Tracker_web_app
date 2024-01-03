@@ -84,7 +84,7 @@ def generate_pdf(df):
     pdf.add_page()
 
     pdf.set_font(family="Times", size=40, style="B")
-    pdf.image(name="Untitled design.png", type="png", w=30, h=30, link="https://spend-it-akash.streamlit.app")
+    pdf.image(name="Untitled design.png", type="png", w=30, h=30, link="https://spend-it.streamlit.app")
     pdf.cell(w=20, h=10, txt='', align="C", ln=1)
     pdf.cell(w=20, h=10, txt='', align="C", ln=1)
     pdf.cell(w=20, h=10, txt='', align="C", ln=1)
