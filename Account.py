@@ -6,7 +6,7 @@ from dependencies.encrypter import encrypt_file, decrypt_file
 
 
 cred = credentials.Certificate("dependencies/expense-tracker-769fe-56a85042b9fc.json")
-# firebase_admin.initialize_app(cred)
+firebase_admin.initialize_app(cred)
 
 # testing Crashes and fixes
 
