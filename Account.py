@@ -9,7 +9,7 @@ cred = credentials.Certificate("dependencies/expense-tracker-769fe-56a85042b9fc.
 firebase_admin.initialize_app(cred)
 
 # testing Crashes and fixes
-
+# streamlit auto update feature not working
 # visibile on GitHub test
 
 def app():
