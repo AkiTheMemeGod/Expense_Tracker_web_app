@@ -127,7 +127,11 @@ def generate_pdf(df):
             pdf.cell(w=20, h=10, txt=str(row['Date']), border=1, align="C")
             pdf.cell(w=50, h=10, txt=str(row['Month']), border=1, align="C")
             pdf.cell(w=40, h=10, txt=str(row['Category']), border=1, align="C")
+            pdf.set_font(family="Times", size=15)
+            pdf.set_text_color(50, 50, 50)
             pdf.cell(w=55, h=10, txt=str(row['Type']), border=1, align="C")
+            pdf.set_font(family="Times", size=25)
+            pdf.set_text_color(50, 50, 50)
             pdf.cell(w=32, h=10, txt=str(row['Amount']), border=1, ln=1, align="C")
         except KeyError:
             pass
