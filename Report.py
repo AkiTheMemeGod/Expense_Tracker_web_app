@@ -94,11 +94,11 @@ def app():
                     st.error(f"Total Expenses : {total_expense}₹")
                 with col6:
                     if savings < 0:
-                        st.error(f"Total Savings : {savings}₹")
+                        st.error(f"Total Balance : {savings}₹")
                     if savings == 0:
-                        st.warning(f"Total Savings : {savings}₹")
+                        st.warning(f"Total Balance : {savings}₹")
                     if savings > 0:
-                        st.success(f"Total Savings : {savings}₹")
+                        st.success(f"Total Balance : {savings}₹")
             except IndexError:
                 st.error("Enter at-least one entry in Income/Expenses")
     except AttributeError:
