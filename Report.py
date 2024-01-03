@@ -50,23 +50,49 @@ def app():
             st.dataframe(df_selection, use_container_width=True)
 
 
-
         with st.container(border=True):
             st.title("Your Expenditure Spree :")
             st.markdown("#")
             st.markdown("#")
-            expense_df = df[df['Category'] == 'Expense']
+            c1, c2, c3 = st.columns(3)
+            with c1:
+                expense_df = df[df['Category'] == 'Expense']
 
-            grouped_df = expense_df.groupby('Type')['Amount'].sum().reset_index()
+                grouped_df = expense_df.groupby('Type')['Amount'].sum().reset_index()
 
-            result_dict = dict(zip(grouped_df['Type'], grouped_df['Amount']))
-            fig = px.bar(grouped_df,
-                   x=["Food"],
-                   y=result_dict["Food\n"],
-                   labels={"x": "Expenses", "y": "How much you spent"})
-            st.plotly_chart(fig)
+                result_dict = dict(zip(grouped_df['Type'], grouped_df['Amount']))
+                fig = px.bar(grouped_df,
+                             x=grouped_df["Type"],
+                             y=grouped_df["Amount"],
+                             labels={"x": "Expenses", "y": "How much you spent"},
+                             width=200)
+                st.plotly_chart(fig)
 
+            with c2:
+                expense_df = df[df['Category'] == 'Income']
 
+                grouped_df = expense_df.groupby('Type')['Amount'].sum().reset_index()
+
+                result_dict = dict(zip(grouped_df['Type'], grouped_df['Amount']))
+                fig = px.bar(grouped_df,
+                             x=grouped_df["Type"],
+                             y=grouped_df["Amount"],
+                             labels={"x": "Income", "y": "How much you Earned"},
+                             width=200)
+                st.plotly_chart(fig)
+
+            with c3:
+                expense_df = df[df['Category'] == 'Expense']
+
+                grouped_df = expense_df.groupby('Type')['Amount'].sum().reset_index()
+
+                result_dict = dict(zip(grouped_df['Type'], grouped_df['Amount']))
+                fig = px.line(grouped_df,
+                              x=grouped_df["Type"],
+                              y=grouped_df["Amount"],
+                              labels={"x": "Expenses", "y": "How much you spent"},
+                              width=200)
+                st.plotly_chart(fig)
 
         with st.container(border=True):
 
