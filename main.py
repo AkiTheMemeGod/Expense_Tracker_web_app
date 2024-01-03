@@ -24,8 +24,8 @@ def t():
     st.session_state.user_csv = ""
     st.session_state.user_pdf = ""
 
-class Multiapp:
 
+class Multiapp:
 
     def __init__(self):
         self.apps = []

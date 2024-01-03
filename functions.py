@@ -3,7 +3,7 @@ from fpdf import FPDF
 import os
 import streamlit as st
 import time as tt
-
+import plotly.express as px
 
 
 def reset_fields():

@@ -55,28 +55,18 @@ def app():
             st.title("Your Expenditure Spree :")
             st.markdown("#")
             st.markdown("#")
+            expense_df = df[df['Category'] == 'Expense']
 
-            col1, col2, col3 = st.columns(3)
+            grouped_df = expense_df.groupby('Type')['Amount'].sum().reset_index()
 
-            with col1:
-                df_selection = df_selection.rename(
-                    columns={'Type': 'index'}
-                ).set_index('index')
-                st.bar_chart(df_selection['Amount'],
-                             color=color)
-            with col2:
-                st.markdown("#")
-                df_selection = df_selection.rename(
-                    columns={'Category': 'index'}
-                ).set_index('index')
-                st.bar_chart(df_selection['Amount'],
-                             color=color)
-            with col3:
-                df_selection = df_selection.rename(
-                    columns={'Date': 'index'}
-                ).set_index('index')
-                st.line_chart(df_selection['Amount'],
-                              color=color)
+            result_dict = dict(zip(grouped_df['Type'], grouped_df['Amount']))
+            fig = px.bar(grouped_df,
+                   x=["Food"],
+                   y=result_dict["Food\n"],
+                   labels={"x": "Expenses", "y": "How much you spent"})
+            st.plotly_chart(fig)
+
+
 
         with st.container(border=True):
 
