@@ -91,7 +91,7 @@ def app():
                 # grouped_df = expense_df.groupby('Type')['Amount'].reset_index()
 
                 # result_dict = dict(zip(grouped_df['Type'], grouped_df['Amount']))
-                fig3 = px.scatter(expense_df1,
+                fig3 = px.line(expense_df1,
                                x=expense_df1["Type"],
                                y=expense_df1["Amount"],
                                labels={"x": "Expenses", "y": f"How much you spent on {expense_df1['Month']}"},
