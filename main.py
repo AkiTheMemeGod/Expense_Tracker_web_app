@@ -99,13 +99,7 @@ class Multiapp:
                 orientation="vertical",
                 icons=["person-fill", "cash-coin", "cash", "file-earmark-bar-graph-fill"],
                 default_index=0,
-                styles={
-                    "container": {"padding": "5!important", "background-color": '#12391E'},
-                    "icon": {"color": "white", "font-size": "23px", },
-                    "nav-link": {"color": "white", "font-size": "20px", "text-align": "left", "margin": "0px",
-                                 "--hover-color": "#065A20"},
-                    "nav-link-selected": {"background-color": "#065A20"},
-                }
+
 
 
             )
