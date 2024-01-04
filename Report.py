@@ -57,7 +57,7 @@ def app():
         # with st.container(border=True):
         side_title = '<h1 style="font-family:monospace; color:#E23D9F; font-size: 65px;", align="center"><br>📈Data</h1><br><br>'
         st.markdown(side_title, unsafe_allow_html=True)
-        c1, c2, c3 = st.columns(3)
+        c1, c2 = st.columns(2)
         try:
             with c1:
                 expense_df = df[df['Category'] == 'Expense']
@@ -85,18 +85,6 @@ def app():
                              width=230)
                 st.plotly_chart(fig2)
 
-            with c3:
-                expense_df = df[df['Month'] == df_selection["Month"]].reset_index()
-                expense_df1 = expense_df[expense_df['Category'] == 'Expense'].reset_index()
-                # grouped_df = expense_df.groupby('Type')['Amount'].reset_index()
-
-                # result_dict = dict(zip(grouped_df['Type'], grouped_df['Amount']))
-                fig3 = px.line(expense_df1,
-                               x=expense_df1["Type"],
-                               y=expense_df1["Amount"],
-                               labels={"x": "Expenses", "y": f"How much you spent on {expense_df1['Month']}"},
-                               width=230)
-                st.plotly_chart(fig3)
         except Exception:
             st.error("Enter at-least one entry in Income/Expenses")
 
