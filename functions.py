@@ -161,7 +161,7 @@ def generate_pdf(df):
         pdf.cell(w=40, h=10, txt='Total', align="R")
         pdf.cell(w=55, h=10, txt='Expense : ', align="L")
         pdf.cell(w=32, h=10, txt=total_expense, ln=1, align="L")
-    except Exception:
+    except Exception or FutureWarning or Warning:
         pass
     pdf.output(st.session_state.user_pdf)
 
