@@ -68,8 +68,7 @@ def app():
                 fig1 = px.bar(grouped_df,
                              x=grouped_df["Type"],
                              y=grouped_df["Amount"],
-                             labels={"x": "Expenses", "y": "How much you spent"},
-                             width=230)
+                             labels={"x": "Expenses", "y": "How much you spent"})
                 st.plotly_chart(fig1)
 
             with c2:
@@ -81,8 +80,7 @@ def app():
                 fig2 = px.bar(grouped_df,
                              x=grouped_df["Type"],
                              y=grouped_df["Amount"],
-                             labels={"x": "Income", "y": "How much you Earned"},
-                             width=230)
+                             labels={"x": "Income", "y": "How much you Earned"})
                 st.plotly_chart(fig2)
 
         except Exception:
