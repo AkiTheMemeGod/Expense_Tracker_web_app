@@ -54,37 +54,39 @@ def app():
             st.dataframe(df_selection, use_container_width=False,hide_index=True,width=800)
 
 
-        # with st.container(border=True):
         side_title = '<h1 style="font-family:monospace; color:#E23D9F; font-size: 65px;", align="center"><br>📈Data</h1><br><br>'
         st.markdown(side_title, unsafe_allow_html=True)
-        c1, c2 = st.columns(2)
-        try:
-            with c1:
-                expense_df = df[df['Category'] == 'Expense']
+        with st.container(border=False):
 
-                grouped_df = expense_df.groupby('Type')['Amount'].sum().reset_index()
+            c1, c2 = st.columns(2)
 
-                result_dict = dict(zip(grouped_df['Type'], grouped_df['Amount']))
-                fig1 = px.bar(grouped_df,
-                             x=grouped_df["Type"],
-                             y=grouped_df["Amount"],
-                             labels={"x": "Expenses", "y": "How much you spent"})
-                st.plotly_chart(fig1)
+            try:
+                with c1:
+                    expense_df = df[df['Category'] == 'Expense']
 
-            with c2:
-                expense_df = df[df['Category'] == 'Income']
+                    grouped_df = expense_df.groupby('Type')['Amount'].sum().reset_index()
 
-                grouped_df = expense_df.groupby('Type')['Amount'].sum().reset_index()
+                    result_dict = dict(zip(grouped_df['Type'], grouped_df['Amount']))
+                    fig1 = px.bar(grouped_df,
+                                 x=grouped_df["Type"],
+                                 y=grouped_df["Amount"],
+                                 labels={"x": "Expenses", "y": "How much you spent"})
+                    st.plotly_chart(fig1)
 
-                result_dict = dict(zip(grouped_df['Type'], grouped_df['Amount']))
-                fig2 = px.bar(grouped_df,
-                             x=grouped_df["Type"],
-                             y=grouped_df["Amount"],
-                             labels={"x": "Income", "y": "How much you Earned"})
-                st.plotly_chart(fig2)
+                with c2:
+                    expense_df = df[df['Category'] == 'Income']
 
-        except Exception:
-            st.error("Enter at-least one entry in Income/Expenses")
+                    grouped_df = expense_df.groupby('Type')['Amount'].sum().reset_index()
+
+                    result_dict = dict(zip(grouped_df['Type'], grouped_df['Amount']))
+                    fig2 = px.bar(grouped_df,
+                                 x=grouped_df["Type"],
+                                 y=grouped_df["Amount"],
+                                 labels={"x": "Income", "y": "How much you Earned"})
+                    st.plotly_chart(fig2)
+
+            except Exception:
+                st.error("Enter at-least one entry in Income/Expenses")
 
         side_title = '<h1 style="font-family:monospace; color:#E23D9F; font-size: 60px;", align="center"><br>💰Total</h1><br><br>'
         st.markdown(side_title, unsafe_allow_html=True)
