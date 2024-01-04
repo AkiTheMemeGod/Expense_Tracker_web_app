@@ -121,6 +121,9 @@ def app():
                         st.warning(f"Total Balance : {savings}₹")
                     if savings > 0:
                         st.success(f"Total Balance : {savings}₹")
+
+            except FutureWarning:
+                pass
             except IndexError:
                 st.error("Enter at-least one entry in Income/Expenses")
     except AttributeError:
