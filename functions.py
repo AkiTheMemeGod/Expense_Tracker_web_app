@@ -20,7 +20,7 @@ def track(cat: str, typ: str, amt: str, desc: str):
         st.warning("Please fill in all fields before adding an entry.")
         return
 
-    rd_csv(d=int(tt.strftime("%d")), m=tt.strftime("%B"), c=cat, t=typ, a=int(amt), des=desc)
+    rd_csv(d=tt.strftime("%d-%m-%Y"), m=tt.strftime("%B"), c=cat, t=typ, a=int(amt), des=desc)
 
 
 def get_types(filepath):
@@ -52,7 +52,7 @@ def wrt_csv(date: list, month: list, cat: list, typ: list, amt: list, desc: list
     df.to_csv(path_or_buf=st.session_state.user_csv, index=False, index_label=None)
 
 
-def rd_csv(d: int, m, c, t, a: int, des: str):
+def rd_csv(d: str, m, c, t, a: int, des: str):
     try:
         x = pd.read_csv(filepath_or_buffer=st.session_state.user_csv, sep=",")
 
@@ -106,7 +106,7 @@ def generate_pdf(df):
     pdf.text(txt=tt.strftime("Date : %d/%m/%y"), x=165, y=35)
     pdf.line(x1=10, x2=200, y1=45, y2=45)
 
-    pdf.set_font(family="times", size=25, style="B")
+    pdf.set_font(family="times", size=20, style="B")
     pdf.set_text_color(50, 50, 50)
     pdf.cell(w=20, h=10, txt='Date', align="C")
 
@@ -122,16 +122,12 @@ def generate_pdf(df):
 
     for index, row in df.iterrows():
         try:
-            pdf.set_font(family="Times", size=25)
+            pdf.set_font(family="Times", size=16)
             pdf.set_text_color(50, 50, 50)
             pdf.cell(w=20, h=10, txt=str(row['Date']), border=1, align="C")
             pdf.cell(w=50, h=10, txt=str(row['Month']), border=1, align="C")
             pdf.cell(w=40, h=10, txt=str(row['Category']), border=1, align="C")
-            pdf.set_font(family="Times", size=15)
-            pdf.set_text_color(50, 50, 50)
             pdf.cell(w=55, h=10, txt=str(row['Type']), border=1, align="C")
-            pdf.set_font(family="Times", size=25)
-            pdf.set_text_color(50, 50, 50)
             pdf.cell(w=32, h=10, txt=str(row['Amount']), border=1, ln=1, align="C")
         except KeyError:
             pass

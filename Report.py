@@ -1,3 +1,5 @@
+import struct
+
 import streamlit
 
 from functions import *
@@ -45,28 +47,30 @@ def app():
                 st.sidebar.success("Downloaded Successfully")
 
 
-        with st.container(border=True):
-            st.title(":rainbow[Report]")
-            st.dataframe(df_selection, use_container_width=True)
+        with st.container(border=False):
+
+            side_title = '<h1 style="font-family:monospace; color:#E23D9F; font-size: 60px;", align="center"><br>📃Report</h1><br><br>'
+            st.markdown(side_title, unsafe_allow_html=True)
+            st.dataframe(df_selection, use_container_width=False,hide_index=True,width=800)
 
 
-        with st.container(border=True):
-            st.title("Your Expenditure Spree :")
-            st.markdown("#")
-            st.markdown("#")
-            c1, c2, c3 = st.columns(3)
+        # with st.container(border=True):
+        side_title = '<h1 style="font-family:monospace; color:#E23D9F; font-size: 65px;", align="center"><br>📈Data</h1><br><br>'
+        st.markdown(side_title, unsafe_allow_html=True)
+        c1, c2, c3 = st.columns(3)
+        try:
             with c1:
                 expense_df = df[df['Category'] == 'Expense']
 
                 grouped_df = expense_df.groupby('Type')['Amount'].sum().reset_index()
 
                 result_dict = dict(zip(grouped_df['Type'], grouped_df['Amount']))
-                fig = px.bar(grouped_df,
+                fig1 = px.bar(grouped_df,
                              x=grouped_df["Type"],
                              y=grouped_df["Amount"],
                              labels={"x": "Expenses", "y": "How much you spent"},
-                             width=200)
-                st.plotly_chart(fig)
+                             width=230)
+                st.plotly_chart(fig1)
 
             with c2:
                 expense_df = df[df['Category'] == 'Income']
@@ -74,30 +78,32 @@ def app():
                 grouped_df = expense_df.groupby('Type')['Amount'].sum().reset_index()
 
                 result_dict = dict(zip(grouped_df['Type'], grouped_df['Amount']))
-                fig = px.bar(grouped_df,
+                fig2 = px.bar(grouped_df,
                              x=grouped_df["Type"],
                              y=grouped_df["Amount"],
                              labels={"x": "Income", "y": "How much you Earned"},
-                             width=200)
-                st.plotly_chart(fig)
+                             width=230)
+                st.plotly_chart(fig2)
 
             with c3:
-                expense_df = df[df['Category'] == 'Expense']
+                expense_df = df[df['Month'] == df_selection["Month"]].reset_index()
+                expense_df1 = expense_df[expense_df['Category'] == 'Expense'].reset_index()
+                # grouped_df = expense_df.groupby('Type')['Amount'].reset_index()
 
-                grouped_df = expense_df.groupby('Type')['Amount'].sum().reset_index()
+                # result_dict = dict(zip(grouped_df['Type'], grouped_df['Amount']))
+                fig3 = px.scatter(expense_df1,
+                               x=expense_df1["Type"],
+                               y=expense_df1["Amount"],
+                               labels={"x": "Expenses", "y": f"How much you spent on {expense_df1['Month']}"},
+                               width=230)
+                st.plotly_chart(fig3)
+        except Exception:
+            st.error("Enter at-least one entry in Income/Expenses")
 
-                result_dict = dict(zip(grouped_df['Type'], grouped_df['Amount']))
-                fig = px.line(grouped_df,
-                              x=grouped_df["Type"],
-                              y=grouped_df["Amount"],
-                              labels={"x": "Expenses", "y": "How much you spent"},
-                              width=200)
-                st.plotly_chart(fig)
-
+        side_title = '<h1 style="font-family:monospace; color:#E23D9F; font-size: 60px;", align="center"><br>💰Total</h1><br><br>'
+        st.markdown(side_title, unsafe_allow_html=True)
         with st.container(border=True):
 
-            st.title(":rainbow[Total:]")
-            st.markdown("#")
             try:
                 total_income = int(df.groupby(by=['Category']).sum()[['Amount']]['Amount'][1])
                 total_expense = int(df.groupby(by=['Category']).sum()[['Amount']]['Amount'][0])
