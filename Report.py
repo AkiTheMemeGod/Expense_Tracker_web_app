@@ -69,7 +69,7 @@ def app():
                              x=grouped_df["Type"],
                              y=grouped_df["Amount"],
                              labels={"x": "Expenses", "y": "How much you spent"})
-                st.plotly_chart(fig1, theme=None)
+                st.plotly_chart(fig1)
 
             with c2:
                 expense_df = df[df['Category'] == 'Income']
@@ -81,7 +81,7 @@ def app():
                              x=grouped_df["Type"],
                              y=grouped_df["Amount"],
                              labels={"x": "Income", "y": "How much you Earned"})
-                st.plotly_chart(fig2, theme=None)
+                st.plotly_chart(fig2)
 
         except Exception:
             st.error("Enter at-least one entry in Income/Expenses")
