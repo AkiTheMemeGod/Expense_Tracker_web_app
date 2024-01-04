@@ -1,13 +1,29 @@
-import streamlit
 from functions import *
 from streamlit_option_menu import option_menu
 import Expenses, Income, Report, Account
-from streamlit_extras.app_logo import add_logo
 import shutil as sh
-# s
+
 st.set_page_config(page_title="Spend It", layout="centered", page_icon="💵")
 
+pg_bg_img = f"""
+<style>
+[data-testid="stApp"] {{
+background-image: url("https://i.imgur.com/IM4FTOY.png");
+background-size: cover;
+background-repeat: no-repeat;
+background-attachment: local;
+background-position: top left;
+}}
+[data-testid="stHeader"]{{
+background-color: rgba(0,0,0,0);
+}}
 
+[data-testid="stSidebar"]{{
+background-color: rgba(0,0,0,0.20);
+}}
+</style>
+"""
+st.markdown(pg_bg_img,unsafe_allow_html=True)
 
 def j():
     parent_path = 'account'
@@ -82,7 +98,16 @@ class Multiapp:
                 options=["Account", "Expense", "Income", "Report"],
                 orientation="vertical",
                 icons=["person-fill", "cash-coin", "cash", "file-earmark-bar-graph-fill"],
-                default_index=0
+                default_index=0,
+                styles={
+                    "container": {"padding": "5!important", "background-color": '#12391E'},
+                    "icon": {"color": "white", "font-size": "23px", },
+                    "nav-link": {"color": "white", "font-size": "20px", "text-align": "left", "margin": "0px",
+                                 "--hover-color": "#065A20"},
+                    "nav-link-selected": {"background-color": "#065A20"},
+                }
+
+
             )
 
         if option == "Account":
