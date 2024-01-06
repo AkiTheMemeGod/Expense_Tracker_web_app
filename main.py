@@ -5,25 +5,6 @@ import shutil as sh
 
 st.set_page_config(page_title="Spend It", layout="centered", page_icon="💵")
 
-pg_bg_img = f"""
-<style>
-[data-testid="stApp"] {{
-background-image: url("https://i.imgur.com/IM4FTOY.png");
-background-size: cover;
-background-repeat: no-repeat;
-background-attachment: local;
-background-position: top left;
-}}
-[data-testid="stHeader"]{{
-background-color: rgba(0,0,0,0);
-}}
-
-[data-testid="stSidebar"]{{
-background-color: rgba(0,0,0,0.20);
-}}
-</style>
-"""
-st.markdown(pg_bg_img,unsafe_allow_html=True)
 
 def j():
     parent_path = 'account'
@@ -99,9 +80,6 @@ class Multiapp:
                 orientation="vertical",
                 icons=["person-fill", "cash-coin", "cash", "file-earmark-bar-graph-fill"],
                 default_index=0,
-
-
-
             )
 
         if option == "Account":
